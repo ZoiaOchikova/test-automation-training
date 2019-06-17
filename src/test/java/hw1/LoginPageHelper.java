@@ -3,18 +3,21 @@ package hw1;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-public class Actions {
-    RemoteWebDriver driver;
-    SoftAssert softAssert;
+public class LoginPageHelper {
+    private RemoteWebDriver driver;
+    private SoftAssert softAssert;
+    private LoginPage loginPage;
 
-    public Actions(RemoteWebDriver driver, SoftAssert softAssert) {
+    public LoginPageHelper(RemoteWebDriver driver, SoftAssert softAssert) {
         this.driver = driver;
         this.softAssert = softAssert;
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
 
     }
 
@@ -23,87 +26,54 @@ public class Actions {
     }
 
     public void login(String user, String pwd){
-        driver.findElementById("user-icon").click();
-        driver.findElementById("name").sendKeys(user);
-        driver.findElementById("password").sendKeys(pwd);
-        driver.findElementById("login-button").click();
+        loginPage.userIcon.click();
+        loginPage.name.sendKeys(user);
+        loginPage.password.sendKeys(pwd);
+        loginPage.loginButton.click();
     }
 
     public String getUserName(){
-        return driver.findElementById("user-name").getText();
+        return loginPage.userName.getText();
 
-    }
-
-    public List<WebElement> getHeaderSections(){
-        return driver.findElements(By.cssSelector("ul.uui-navigation.nav.navbar-nav.m-l8 > li"));
     }
 
     public List<WebElement> getIndexPageElements(){
         return driver.findElements(By.cssSelector(".main-content > div > div"));
     }
 
-    public WebElement getMainTitle(){
-        return driver.findElement(By.name("main-title"));
-    }
-
-    public WebElement getMainTitleText(){
-        return driver.findElement(By.name("jdi-text"));
-    }
-
-    public WebElement getIFrame(){
-        return driver.findElementById("iframe");
-    }
-
     public void switchToIFrame(){
-        driver.switchTo().frame(getIFrame());
+        driver.switchTo().frame(loginPage.iFrame);
     }
 
     public void switchToParentFrame(){
         driver.switchTo().parentFrame();
     }
 
-    public WebElement getIFrameLogo(){
-        return driver.findElement(By.id("epam_logo"));
-    }
-
-    public WebElement getSubHeader(String title){
-        return driver.findElementByLinkText(title);
-    }
-
-    public WebElement getLeftSection(){
-        return driver.findElementById("mCSB_1");
-    }
-
-    public WebElement getFooterSection(){
-        return driver.findElementByClassName("footer-content");
-    }
 
     public void checkUserName(String userName) {
         softAssert.assertEquals(getUserName(), userName);
     }
 
     public void checkHeadersSection(List<String> expectedHeaders) {
-        for (WebElement element: getHeaderSections()) {
+        for (WebElement element: loginPage.headerSections) {
             softAssert.assertTrue(element.isDisplayed());
             softAssert.assertTrue(expectedHeaders.contains(element.getText()));
         }
     }
 
     public void checkIndexPageImages(Integer expectedIndexPageElementsNumber) {
-        List<WebElement> actualIndexPageElements = getIndexPageElements();
         WebElement elementImg;
-        softAssert.assertTrue(actualIndexPageElements.size() == expectedIndexPageElementsNumber);
-        for (WebElement element: actualIndexPageElements){
+        softAssert.assertTrue(loginPage.indexPageElements.size() == expectedIndexPageElementsNumber);
+        for (WebElement element: loginPage.indexPageElements){
             elementImg = element.findElement(By.className("benefit-icon"));
             softAssert.assertTrue(elementImg.isDisplayed());
         }
     }
 
     public void checkIndexPageTexts(List<String> expectedIndexPageElements) {
-        List<WebElement> actualIndexPageElements = getIndexPageElements();
         WebElement elementTxt;
-        softAssert.assertEquals(actualIndexPageElements.size(), expectedIndexPageElements.size());
-        for (WebElement element: actualIndexPageElements){
+        softAssert.assertEquals(loginPage.indexPageElements.size(), expectedIndexPageElements.size());
+        for (WebElement element: loginPage.indexPageElements){
             elementTxt = element.findElement(By.className("benefit-txt"));
             softAssert.assertTrue(elementTxt.isDisplayed());
             softAssert.assertTrue(expectedIndexPageElements.contains(element.getText()));
@@ -111,8 +81,8 @@ public class Actions {
     }
 
     public void checkTitles(String expMainTitle, String expMainTitleText){
-        WebElement mainTitle = getMainTitle();
-        WebElement mainTitleText = getMainTitleText();
+        WebElement mainTitle = loginPage.mainTitle;
+        WebElement mainTitleText = loginPage.mainTitleText;
         softAssert.assertTrue(mainTitle.isDisplayed());
         softAssert.assertEquals(mainTitle.getText(), expMainTitle);
         softAssert.assertTrue(mainTitleText.isDisplayed());
@@ -120,15 +90,15 @@ public class Actions {
     }
 
     public void checkIFrameExistence(){
-        softAssert.assertTrue(getIFrame().isDisplayed());
+        softAssert.assertTrue(loginPage.iFrame.isDisplayed());
     }
 
     public void checkIFrameLogoExistence(){
-        softAssert.assertTrue(getIFrameLogo().isDisplayed());
+        softAssert.assertTrue(loginPage.iFrameLogo.isDisplayed());
     }
 
     public void checkSubHeader(String title, String url){
-        WebElement subHeader = getSubHeader(title);
+        WebElement subHeader = loginPage.subHeader;
         softAssert.assertTrue(subHeader.isDisplayed());
         softAssert.assertEquals(subHeader.getText(), title);
         softAssert.assertTrue(subHeader.isDisplayed());
@@ -137,11 +107,11 @@ public class Actions {
     }
 
     public void checkLeftSectionExistence(){
-        softAssert.assertTrue(getLeftSection().isDisplayed());
+        softAssert.assertTrue(loginPage.leftSection.isDisplayed());
     }
 
     public void checkFooterExistence(){
-        softAssert.assertTrue(getFooterSection().isDisplayed());
+        softAssert.assertTrue(loginPage.footerSection.isDisplayed());
     }
 
 }

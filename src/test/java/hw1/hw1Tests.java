@@ -14,7 +14,7 @@ public class hw1Tests {
     private Utils utils;
     private RemoteWebDriver driver;
     private SoftAssert softAssert;
-    private Actions pageActions;
+    private LoginPageHelper pageLoginPageHelper;
     private ArrayList<String> headers;
     private ArrayList<String> indexPageElements;
     private Integer indexPageElementsNumber;
@@ -28,10 +28,10 @@ public class hw1Tests {
         utils = new Utils();
         driver = utils.getDriver("chrome");
         softAssert = new SoftAssert();
-        pageActions = new Actions(driver, softAssert);
-        headers = new ArrayList<String>(Arrays.asList("HOME", "CONACT FORM", "SERVICE", "METALS & COLORS"));
+        pageLoginPageHelper = new LoginPageHelper(driver, softAssert);
+        headers = new ArrayList<String>(Arrays.asList("HOME", "CONTACT FORM", "SERVICE", "METALS & COLORS"));
         indexPageElementsNumber = 4;
-        indexPageElements = new ArrayList<String>(Arrays.asList("To incude good practices\nand ideas from successful\nEPAM project",
+        indexPageElements = new ArrayList<String>(Arrays.asList("To include good practices\nand ideas from successful\nEPAM project",
                 "To be flexible and\ncustomizable",
                 "To be multiplatform",
                 "Already have good base\n(about 20 internal and\nsome external projects),\nwish to get more…"));
@@ -50,20 +50,20 @@ public class hw1Tests {
 
     @Test
     public void loginTest(){
-        pageActions.checkPageTitle("Home Page");
-        pageActions.login("epam", "1234");
-        pageActions.checkUserName("PITER CHAILOVSKII");
-        pageActions.checkPageTitle("Home Page");
-        pageActions.checkHeadersSection(headers);
-        pageActions.checkIndexPageImages(indexPageElementsNumber);
-        pageActions.checkIndexPageTexts(indexPageElements);
-        pageActions.checkTitles(expMainTitle, expMainTitleText);
-        pageActions.checkIFrameExistence();
-        pageActions.switchToIFrame();
-        pageActions.checkIFrameLogoExistence();
-        pageActions.switchToParentFrame();
-        pageActions.checkSubHeader(subHeaderTitle, subHeaderUrl);
-        pageActions.checkLeftSectionExistence();
-        pageActions.checkFooterExistence();
+        pageLoginPageHelper.checkPageTitle("Home Page");
+        pageLoginPageHelper.login("epam", "1234");
+        pageLoginPageHelper.checkUserName("PITER CHAILOVSKII");
+        pageLoginPageHelper.checkPageTitle("Home Page");
+        pageLoginPageHelper.checkHeadersSection(headers);
+        pageLoginPageHelper.checkIndexPageImages(indexPageElementsNumber);
+        pageLoginPageHelper.checkIndexPageTexts(indexPageElements);
+        pageLoginPageHelper.checkTitles(expMainTitle, expMainTitleText);
+        pageLoginPageHelper.checkIFrameExistence();
+        pageLoginPageHelper.switchToIFrame();
+        pageLoginPageHelper.checkIFrameLogoExistence();
+        pageLoginPageHelper.switchToParentFrame();
+        pageLoginPageHelper.checkSubHeader(subHeaderTitle, subHeaderUrl);
+        pageLoginPageHelper.checkLeftSectionExistence();
+        pageLoginPageHelper.checkFooterExistence();
     }
 }
