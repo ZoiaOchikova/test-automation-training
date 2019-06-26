@@ -24,13 +24,10 @@ public class Ex3 {
     @BeforeSuite
     public void setUpSuite(){
         utils = new Utils();
-        driver = utils.getDriver("chrome");
-        softAssert = new SoftAssert();
     }
 
     @BeforeClass
     public void setUpClass(){
-        pageLoginPageHelper = new LoginPageHelper(driver, softAssert);
         headers = new ArrayList<String>(Arrays.asList("HOME", "CONTACT FORM", "SERVICE", "METALS & COLORS"));
         indexPageElementsNumber = 4;
         indexPageElements = new ArrayList<String>(Arrays.asList("To include good practices\nand ideas from successful\nEPAM project",
@@ -45,6 +42,9 @@ public class Ex3 {
 
     @BeforeMethod
     public void setUpMethod(){
+        driver = utils.getDriver("chrome");
+        softAssert = new SoftAssert();
+        pageLoginPageHelper = new LoginPageHelper(driver, softAssert);
         utils.setUpSuite("http://epam.github.io/JDI/index.html", 1000, TimeUnit.MILLISECONDS);
     }
 

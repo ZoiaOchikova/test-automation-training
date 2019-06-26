@@ -4,10 +4,7 @@ import hw1.Utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.util.concurrent.TimeUnit;
@@ -17,15 +14,19 @@ public class Ex1 {
     private RemoteWebDriver driver;
     private SoftAssert softAssert;
 
-    @BeforeClass
-    public void setUp() {
+    @BeforeSuite
+    public void setUpSuite(){
         utils = new Utils();
+    }
+
+    @BeforeMethod
+    public void setUp() {
         driver = utils.getDriver("chrome");
         softAssert = new SoftAssert();
         utils.setUpSuite("https://epam.github.io/JDI/index.html", 1000, TimeUnit.MILLISECONDS);
     }
 
-    @AfterClass
+    @AfterMethod
     public void teardown(){
         driver.close();
         softAssert.assertAll();
