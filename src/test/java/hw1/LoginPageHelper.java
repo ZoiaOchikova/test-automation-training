@@ -3,7 +3,6 @@ package hw1;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -17,7 +16,7 @@ public class LoginPageHelper {
     public LoginPageHelper(RemoteWebDriver driver, SoftAssert softAssert) {
         this.driver = driver;
         this.softAssert = softAssert;
-        loginPage = PageFactory.initElements(driver, LoginPage.class);
+        loginPage = new LoginPage(driver);
 
     }
 

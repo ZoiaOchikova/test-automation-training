@@ -1,5 +1,6 @@
 package hw1;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -12,14 +13,12 @@ public class Utils {
 
     public RemoteWebDriver getDriver(String browser){
         if ("chrome".equals(browser)) {
-            DesiredCapabilities cap = DesiredCapabilities.chrome();
-            cap.setBrowserName(browser);
-            driver = new ChromeDriver(cap);
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
         }
         else if ("firefox".equals(browser)) {
-            DesiredCapabilities cap = DesiredCapabilities.chrome();
-            cap.setBrowserName(browser);
-            driver = new FirefoxDriver(cap);
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
         }
         else {
             throw new Hw1Exception("Not valid driver name");

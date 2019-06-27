@@ -1,9 +1,8 @@
 package hw1;
 
+import hw1.enums.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
@@ -18,31 +17,35 @@ public class hw1Tests {
     private ArrayList<String> headers;
     private ArrayList<String> indexPageElements;
     private Integer indexPageElementsNumber;
-    private String expMainTitle;
-    private String expMainTitleText;
-    private String subHeaderTitle;
-    private String subHeaderUrl;
+
+
+    @BeforeSuite
+    public void setUpSuite(){
+        utils = new Utils();
+    }
 
     @BeforeClass
     public void setUp(){
-        utils = new Utils();
+        headers = new ArrayList<String>(Arrays.asList(HeadersSection.HOME.getName(),
+                HeadersSection.CONTACT_FORM.getName(),
+                HeadersSection.SERVICE.getName(),
+                HeadersSection.METALS_AND_COLORS.getName()));
+        indexPageElementsNumber = 4;
+        indexPageElements = new ArrayList<String>(Arrays.asList(PageTexts.TO_INCLUDE_GOOD_PRACTICES.getText(),
+                PageTexts.TO_BE_FLEXIBLE.getText(),
+                PageTexts.TO_BE_MULTIPLATFORM.getText(),
+                PageTexts.ALREADY_HAVEGOOD_BASE.getText()));
+    }
+
+    @BeforeMethod
+    public void setUpMethod(){
         driver = utils.getDriver("chrome");
         softAssert = new SoftAssert();
         pageLoginPageHelper = new LoginPageHelper(driver, softAssert);
-        headers = new ArrayList<String>(Arrays.asList("HOME", "CONTACT FORM", "SERVICE", "METALS & COLORS"));
-        indexPageElementsNumber = 4;
-        indexPageElements = new ArrayList<String>(Arrays.asList("To include good practices\nand ideas from successful\nEPAM project",
-                "To be flexible and\ncustomizable",
-                "To be multiplatform",
-                "Already have good base\n(about 20 internal and\nsome external projects),\nwish to get more…"));
-        expMainTitle = "EPAM FRAMEWORK WISHES…";
-        expMainTitleText = "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISICING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR.";
-        subHeaderTitle = "JDI GITHUB";
-        subHeaderUrl = "https://github.com/epam/JDI";
-        utils.setUpSuite("http://epam.github.io/JDI/index.html", 1000, TimeUnit.MILLISECONDS);
+        utils.setUpSuite(Urls.JDI.getUrl(), 1000, TimeUnit.MILLISECONDS);
     }
 
-    @AfterClass
+    @AfterMethod
     public void teardown(){
         driver.close();
         softAssert.assertAll();
@@ -50,19 +53,19 @@ public class hw1Tests {
 
     @Test
     public void loginTest(){
-        pageLoginPageHelper.checkPageTitle("Home Page");
-        pageLoginPageHelper.login("epam", "1234");
-        pageLoginPageHelper.checkUserName("PITER CHAILOVSKII");
-        pageLoginPageHelper.checkPageTitle("Home Page");
+        pageLoginPageHelper.checkPageTitle(Titeles.HOME_PAGE.getTitle());
+        pageLoginPageHelper.login(Users.PITER_CHAILOVSKII.getLogin(), Users.PITER_CHAILOVSKII.getPassword());
+        pageLoginPageHelper.checkUserName(Users.PITER_CHAILOVSKII.getName());
+        pageLoginPageHelper.checkPageTitle(Titeles.HOME_PAGE.getTitle());
         pageLoginPageHelper.checkHeadersSection(headers);
         pageLoginPageHelper.checkIndexPageImages(indexPageElementsNumber);
         pageLoginPageHelper.checkIndexPageTexts(indexPageElements);
-        pageLoginPageHelper.checkTitles(expMainTitle, expMainTitleText);
+        pageLoginPageHelper.checkTitles(Titeles.EPAM_FRAMEWORK_WISHES.getTitle(), PageTexts.LOREM_IPSUM.getText());
         pageLoginPageHelper.checkIFrameExistence();
         pageLoginPageHelper.switchToIFrame();
         pageLoginPageHelper.checkIFrameLogoExistence();
         pageLoginPageHelper.switchToParentFrame();
-        pageLoginPageHelper.checkSubHeader(subHeaderTitle, subHeaderUrl);
+        pageLoginPageHelper.checkSubHeader(Titeles.JDI_GITHUB.getTitle(), Urls.GITHUB_JDI.getUrl());
         pageLoginPageHelper.checkLeftSectionExistence();
         pageLoginPageHelper.checkFooterExistence();
     }
