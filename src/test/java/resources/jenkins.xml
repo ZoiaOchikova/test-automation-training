@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Hw5" parallel="tests" thread-count="3" >
+
+    <parameter name="browserType" value="chrome" />
+    <test name="Jen" parallel="classes" thread-count="1">
+
+        <classes>
+            <class name="hw4.Hw4"/>
+        </classes>
+
+    </test>
+</suite>

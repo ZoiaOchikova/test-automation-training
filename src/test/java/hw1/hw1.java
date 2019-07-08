@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public class hw1Tests {
+public class hw1 {
     private Utils utils;
     private RemoteWebDriver driver;
     private SoftAssert softAssert;

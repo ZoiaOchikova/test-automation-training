@@ -1,13 +1,16 @@
-package hw4;
+package hw4.utils;
 
 import com.codeborne.selenide.Configuration;
 import hw1.Hw1Exception;
+import hw4.Hw4Exception;
 import hw4.enums.ElementTypes;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.open;
 
 public class Utils {
 
+    @Step("Runs ${0} browser")
     public void setUpSuite(String browser,
                            String url,
                            Integer timeToWait,

@@ -4,14 +4,22 @@ import hw1.enums.*;
 import hw4.enums.*;
 import hw4.pageObjectHelpers.DefferentElemntsPageHelper;
 import hw4.pageObjectHelpers.LoginPageHelper;
+import hw4.utils.AllureAttachmentListener;
+import hw4.utils.Utils;
+import io.qameta.allure.Story;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Ex1 {
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
+@Listeners(AllureAttachmentListener.class)
+public class Hw4 {
+
+    private WebDriver driver;
     private Utils utils;
     private SoftAssert softAssert;
     private LoginPageHelper pageLoginPageHelper;
@@ -53,10 +61,12 @@ public class Ex1 {
     @AfterMethod
     public void teardown(){
         softAssert.assertAll();
+        getWebDriver().close();
     }
 
+    @Story("Test verify base page elements")
     @Test
-    public void hw4Test(){
+    public void TestHw41(){
         pageLoginPageHelper.checkPageTitle(Titeles.HOME_PAGE.getTitle());
         pageLoginPageHelper.login(Users.PITER_CHAILOVSKII.getLogin(), Users.PITER_CHAILOVSKII.getPassword());
         pageLoginPageHelper.checkUserName(Users.PITER_CHAILOVSKII.getName());
@@ -87,5 +97,15 @@ public class Ex1 {
         defferentElemntsHelper.checkLogRow(ElementTypes.CHECKBOX, false, Checkboxes.WIND.getText());
         defferentElemntsHelper.clickSelection(Selects.YELLOW.getText());
         defferentElemntsHelper.checkLogRow(ElementTypes.DROPDOWN, true, Selects.YELLOW.getText());
+    }
+
+    @Story("Test verify base page elements")
+    @Test
+    public void TestHw42() {
+        pageLoginPageHelper.checkPageTitle(Titeles.HOME_PAGE.getTitle());
+        pageLoginPageHelper.login(Users.PITER_CHAILOVSKII.getLogin(), Users.PITER_CHAILOVSKII.getPassword());
+        pageLoginPageHelper.checkUserName(Users.PITER_CHAILOVSKII.getName());
+        pageLoginPageHelper.checkPageTitle(Titeles.HOME_PAGE.getTitle());
+        pageLoginPageHelper.checkServiceDropdown(services);
     }
 }
