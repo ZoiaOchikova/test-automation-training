@@ -1,1 +1,0 @@
-{"uuid":"f80f9be3-d656-4af1-9e2f-e32bbf2caf3a","name":"hw4.Hw4.teardown","children":["d0e9e510-cb1d-4abe-9071-5156aabd7b20"],"description":"","befores":[],"afters":[{"name":"teardown","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1562759556010,"stop":1562759556095}],"links":[],"start":1562759556010,"stop":1562759556095}

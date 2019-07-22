@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Hw2Ex2" parallel="tests" thread-count="3" >
+    <test name="Smoke" parallel="classes" thread-count="3">
+
+        <groups>
+            <run>
+                <include name="Smoke" />
+            </run>
+        </groups>
+
+        <packages>
+            <package name="Selenium.hw2"/>
+        </packages>
+
+    </test>
+</suite>
